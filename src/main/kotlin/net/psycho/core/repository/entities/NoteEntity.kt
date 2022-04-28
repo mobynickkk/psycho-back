@@ -26,14 +26,7 @@ open class NoteEntity {
         return id == other.id
     }
 
-    override fun hashCode(): Int {
-        var result = id.hashCode()
-        result = 31 * result + event.hashCode()
-        result = 31 * result + emotion.hashCode()
-        result = 31 * result + thought.hashCode()
-        result = 31 * result + action.hashCode()
-        return result
-    }
+    override fun hashCode(): Int = 131071
 
     override fun toString(): String {
         return this::class.simpleName + "(id=$id)"
