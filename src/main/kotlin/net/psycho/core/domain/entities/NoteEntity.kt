@@ -1,23 +1,23 @@
-package net.psycho.core.repository.entities
+package net.psycho.core.domain.entities
 
 import org.hibernate.Hibernate
 import javax.persistence.*
 
 @Table(name = "notes")
 @Entity
-open class NoteEntity {
+class NoteEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    open var id: Long = 0
+    var id: Long = 0
     @Column(name = "event", nullable = false)
-    open var event: String = ""
+    var event: String = ""
     @Column(name = "emotion", nullable = false)
-    open var emotion: String = ""
+    var emotion: String = ""
     @Column(name = "thought", nullable = false)
-    open var thought: String = ""
+    var thought: String = ""
     @Column(name = "action", nullable = false)
-    open var action: String = ""
+    var action: String = ""
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
