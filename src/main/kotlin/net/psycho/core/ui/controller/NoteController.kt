@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
 import net.psycho.core.domain.repositories.NoteRepository
@@ -49,6 +50,21 @@ class NoteController(private val noteDto2EntityConverter: NoteDto2EntityConverte
         return try {
             val noteEntities = noteRepository.findAll()
             ResponseEntity(noteEntities.map(noteEntity2DtoConverter::convert), HttpStatus.OK)
+        } catch (e: Exception) {
+            ResponseEntity(HttpStatus.BAD_REQUEST)
+        }
+    }
+
+    @GetMapping("/note")
+    fun getNotesByParams(@RequestParam(value = "schema", required = true) schemaId: Long):
+            ResponseEntity<List<NoteDto>> {
+        return try {
+            val notes = noteRepository.findAllBySchemaId(schemaId).toList()
+            if (notes.isEmpty()) {
+                ResponseEntity(HttpStatus.NOT_FOUND)
+            } else {
+                ResponseEntity(notes.map(noteEntity2DtoConverter::convert), HttpStatus.OK)
+            }
         } catch (e: Exception) {
             ResponseEntity(HttpStatus.BAD_REQUEST)
         }
