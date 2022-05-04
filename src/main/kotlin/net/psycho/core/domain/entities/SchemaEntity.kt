@@ -3,16 +3,15 @@ package net.psycho.core.domain.entities
 import org.hibernate.Hibernate
 import javax.persistence.*
 
-@Table(name = "notes")
 @Entity
-class NoteEntity {
+@Table(name = "schema")
+class SchemaEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     var id: Long = 0
-    @ManyToOne
-    @JoinColumn(name = "fk_schema_id", nullable = false)
-    var schema: SchemaEntity = SchemaEntity()
+    @Column(name = "name", nullable = false)
+    var name: String = ""
     @Column(name = "fields", nullable = false)
     var fields: String = ""
 
@@ -23,7 +22,7 @@ class NoteEntity {
         return id == other.id
     }
 
-    override fun hashCode(): Int = 131071
+    override fun hashCode(): Int = 131073
 
     override fun toString(): String {
         return this::class.simpleName + "(id=$id)"
