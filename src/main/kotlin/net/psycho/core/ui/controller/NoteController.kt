@@ -46,24 +46,18 @@ class NoteController(private val noteDto2EntityConverter: NoteDto2EntityConverte
     }
 
     @GetMapping("/notes")
-    fun getNotes(): ResponseEntity<List<NoteDto>> {
+    fun getNotes(@RequestParam(value = "schema", required = false) schemaId: Long?): ResponseEntity<List<NoteDto>> {
         return try {
-            val noteEntities = noteRepository.findAll()
-            ResponseEntity(noteEntities.map(noteEntity2DtoConverter::convert), HttpStatus.OK)
-        } catch (e: Exception) {
-            ResponseEntity(HttpStatus.BAD_REQUEST)
-        }
-    }
-
-    @GetMapping("/note")
-    fun getNotesByParams(@RequestParam(value = "schema", required = true) schemaId: Long):
-            ResponseEntity<List<NoteDto>> {
-        return try {
-            val notes = noteRepository.findAllBySchemaId(schemaId).toList()
-            if (notes.isEmpty()) {
-                ResponseEntity(HttpStatus.NOT_FOUND)
+            if (schemaId == null) {
+                val noteEntities = noteRepository.findAll()
+                ResponseEntity(noteEntities.map(noteEntity2DtoConverter::convert), HttpStatus.OK)
             } else {
-                ResponseEntity(notes.map(noteEntity2DtoConverter::convert), HttpStatus.OK)
+                val notes = noteRepository.findAllBySchemaId(schemaId).toList()
+                if (notes.isEmpty()) {
+                    ResponseEntity(HttpStatus.NOT_FOUND)
+                } else {
+                    ResponseEntity(notes.map(noteEntity2DtoConverter::convert), HttpStatus.OK)
+                }
             }
         } catch (e: Exception) {
             ResponseEntity(HttpStatus.BAD_REQUEST)
