@@ -24,10 +24,12 @@ repositories {
 
 dependencies {
     testImplementation(kotlin("test"))
+    implementation("org.springframework.boot:spring-boot-starter-parent:2.6.2")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     runtimeOnly("org.postgresql:postgresql")
-    implementation("org.jetbrains.kotlin:kotlin-reflect:1.5.10")
+    implementation("org.jetbrains.kotlin:kotlin-reflect")
+    implementation("org.springdoc:springdoc-openapi-ui:1.6.3")
 }
 
 tasks.test {
