@@ -1,4 +1,6 @@
 package net.psycho.core.services.dto
 
-data class FieldDescrDto(val name: String,
-                         val type: String)
+import com.fasterxml.jackson.annotation.JsonProperty
+
+data class FieldDescrDto(@JsonProperty("name") val name: String,
+                         @JsonProperty("type") val type: String)
